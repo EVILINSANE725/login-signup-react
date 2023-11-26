@@ -1,11 +1,12 @@
 // LoginComponent.jsx
 
-import React, { useState } from 'react';
-import '../../styles/login-styles.css'; // Import the CSS file
+import React, { useEffect, useState } from 'react';
+import '../../styles/login-styles.css'; 
 
 const LoginComponent = () => {
   const [isSignUpActive, setSignUpActive] = useState(false);
   const [isDarkMode, setDarkMode] = useState(false);
+  const [width,setWidth]=useState(null)
 
   const handleToggle = () => {
     setSignUpActive(!isSignUpActive);
@@ -14,6 +15,23 @@ const LoginComponent = () => {
   const handleModeToggle = () => {
     setDarkMode(!isDarkMode);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+  
+    // Initial width
+    setWidth(window.innerWidth);
+  
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+  
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div className={`container ${isSignUpActive ? 'active' : ''}`} id="container">
@@ -48,7 +66,7 @@ const LoginComponent = () => {
           <input type="password" placeholder="Password" />
           <a href="#">Forget Your Password?</a>
           <button type="submit">Sign In</button>
-          <p className="form-switch" onClick={handleToggle}>Don't have an account? Sign Up</p>
+        {width < 768 && <p className="form-switch" onClick={handleToggle}>Don't have an account? Sign Up</p>}
         </form>
       </div>
       <div className="toggle-container">
