@@ -6,12 +6,13 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import LoginComponent from './components/login/loginComponent.jsx';
+import LoginSignup from './pages/login';
+
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginComponent/>,
+    element: <LoginSignup/>,
   },
 ]);
 
